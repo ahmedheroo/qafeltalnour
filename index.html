@@ -8,6 +8,11 @@
         <meta name="author" content="قافلة النور">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=yes">
+        <!-- Performance optimization meta tags -->
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="theme-color" content="#0a7f11">
+        <!-- Preload logo image for better LCP -->
+        <link rel="preload" as="image" href="assets/images/omra/logo1.png">
         <link rel="canonical" href="https://www.qafiltalnour.com/">
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website">
@@ -53,26 +58,32 @@
     <title>قافلة النور</title>
     <!-- Favicon Icon -->
     <link rel="shortcut icon" href="assets/images/omra/favicons/favicon-32x32.png" type="image/x-icon">
-    <!-- Google Fonts -->
+    <!-- Preload critical fonts for better LCP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts with display=swap for better performance -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
     
     <!-- Flaticon -->
     <link rel="stylesheet" href="assets/css/flaticon.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="assets/css/fontawesome-5.14.0.min.css">
-    <!-- Bootstrap -->
+    <!-- Critical CSS (inline or preload) -->
     <link rel="stylesheet" href="assets/css/bootstraprtl.min.css">
-    <!-- Magnific Popup -->
-    <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
-    <!-- Nice Select -->
-    <link rel="stylesheet" href="assets/css/nice-select.min.css">
-    <!-- Animate -->
-    <link rel="stylesheet" href="assets/css/aos.css">
-    <link rel="stylesheet" href="assets/css/droidarabickufi.css">
-    <!-- Slick -->
-    <link rel="stylesheet" href="assets/css/slick.min.css">
-    <!-- Main Style -->
-    <link rel="stylesheet" href="assets/css/style-rtl.css">
+    <!-- Main Style - Critical -->
+    <link rel="preload" href="assets/css/style-rtl.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/style-rtl.css"></noscript>
+    <!-- Non-critical CSS - defer loading -->
+    <link rel="preload" href="assets/css/magnific-popup.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/magnific-popup.min.css"></noscript>
+    <link rel="preload" href="assets/css/nice-select.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/nice-select.min.css"></noscript>
+    <link rel="preload" href="assets/css/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/aos.css"></noscript>
+    <link rel="preload" href="assets/css/droidarabickufi.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/droidarabickufi.css"></noscript>
+    <link rel="preload" href="assets/css/slick.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/slick.min.css"></noscript>
     
     <style>
         .goUpBtn {
@@ -278,7 +289,7 @@
             <div class="container-fluid">
                 <h1 class="hero-title" data-aos="flip-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">قافلة النور ترحب بكم </h1>
                 <h3 class="hero-title" style="font-size: 2rem;" data-aos="flip-up" data-aos-delay="50" data-aos-duration="1500" data-aos-offset="50">حجز باصات مكة والمدينة المنورة | نقل حجاج أمن مع قافلة النور</h3>
-                <div class="main-hero-image bgs-cover" style="background-image: url(assets/images/omra/bg1.jpg);"></div>
+                <div class="main-hero-image bgs-cover" style="background-image: url(assets/images/omra/bg1.jpg); background-size: cover; background-position: center;"></div>
             </div>
         </section>
         <!-- Hero Area End -->
@@ -405,202 +416,7 @@
                 </div>
             </div>
         </section>
-        <!-- About Us Area end -->
-           <!-- Popular Destinations Area start -->
-        <!-- <section class="popular-destinations-area rel z-1">
-            <div class="container-fluid">
-                <div class="popular-destinations-wrap br-20 bgc-lighter pt-100 pb-70">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <div class="section-title text-center counter-text-wrap mb-70" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                                <h2>إغتنم راحتك في أفضل فنادق مكة والمدينة</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section-title text-center counter-text-wrap mb-70" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                        
-                        <h3>فنادق مكة</h3>
-                    </div>
-                   
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683586.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683576.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683570.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>  <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683560.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                           
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683555.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div> <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683550.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div> <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683546.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683541.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section-title text-center counter-text-wrap mt-15 mb-70" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                        
-                        <h3>فنادق المدينة</h3>
-                    </div>
-                   
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683491.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683483.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683487.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>  <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/hotels/1737821683473.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="section-title text-center counter-text-wrap mt-15 mb-70" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
-                        
-                        <h3>باصات فاخرة VIP </h3>
-                    </div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/bus/1737821683515.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/bus/1737821683623.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                         
-                                        <img loading="lazy" src="assets/images/omra/bus/1737821683595.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>  <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/bus/1737821683599.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                           
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/bus/1737821683590.jpeg" alt="Destination" style="width:100%;height:auto;">
-                                    </div>
-                                    
-                                </div> 
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="destination-item style-two" data-aos="flip-up" data-aos-delay="100" data-aos-duration="1500" data-aos-offset="50">
-                                    <div class="image">
-                                        <img loading="lazy" src="assets/images/omra/bus/1737821683613.jpeg" alt="Destination">
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-        <!-- Popular Destinations Area end -->
-
           <!-- Services Area start -->
-
           <section class="popular-destinations-area pt-100 pb-90 rel z-1">
             <div class="container">
                 <div class="row justify-content-center">
@@ -904,55 +720,55 @@
             <div class="gallery-slider-active">
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G2.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G2.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G3.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G3.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G4.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G4.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G5.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G5.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G6.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G6.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G7.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G7.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G8.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G8.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G9.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G9.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
                 <div class="gallery-three-item" data-aos="fade-up" data-aos-duration="1500" data-aos-offset="50">
                     <div class="image">
-                        <img loading="lazy" src="assets/images/omra/gallery/G10.png" alt="Gallery" style="width:100%;height:auto;">
+                        <img loading="lazy" src="assets/images/omra/gallery/G10.webp" alt="Gallery" style="width:100%;height:auto;">
                     </div>
                     <div class="content"></div>
                 </div>
@@ -1062,27 +878,47 @@
     <!--End pagewrapper-->
    
     <!-- Jquery -->
-    <script src="assets/js/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/jquery-3.6.0.min.js" defer></script>
     <!-- Bootstrap -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/bootstrap.min.js" defer></script>
     <!-- Appear Js -->
-    <script src="assets/js/appear.min.js"></script>
+    <script src="assets/js/appear.min.js" defer></script>
     <!-- Slick -->
-    <script src="assets/js/slick.min.js"></script>
+    <script src="assets/js/slick.min.js" defer></script>
     <!-- Magnific Popup -->
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.min.js" defer></script>
     <!-- Nice Select -->
-    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js" defer></script>
     <!-- Image Loader -->
-    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/imagesloaded.pkgd.min.js" defer></script>
     <!-- Skillbar -->
-    <script src="assets/js/skill.bars.jquery.min.js"></script>
+    <script src="assets/js/skill.bars.jquery.min.js" defer></script>
     <!-- Isotope -->
-    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js" defer></script>
     <!--  AOS Animation -->
-    <script src="assets/js/aos.js"></script>
+    <script src="assets/js/aos.js" defer></script>
     <!-- Custom script -->
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/script.js" defer></script>
+    <!-- Performance optimization script -->
+    <script>
+        // Lazy load images with intersection observer for better performance
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src || img.src;
+                        if (img.dataset.srcset) {
+                            img.srcset = img.dataset.srcset;
+                        }
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            document.querySelectorAll('img[data-src]').forEach(img => imageObserver.observe(img));
+        }
+    </script>
 
 </body>
 </html>
