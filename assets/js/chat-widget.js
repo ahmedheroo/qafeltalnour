@@ -12,7 +12,7 @@
     launcher.setAttribute('aria-label', 'المساعد الذكي — قافلة النور');
     launcher.setAttribute('aria-expanded', 'false');
     launcher.innerHTML =
-        '<span class="qn-chat-launcher-icon">&#128172;</span>' + // 💬
+        '<span class="qn-chat-launcher-icon" aria-hidden="true"></span>' +
         '<span class="qn-chat-dot"></span>';
 
     var panel = document.createElement('div');
@@ -46,10 +46,74 @@
     var pending = false;
     var welcomeShown = false;
 
+    // ---- Minimal markdown renderer (XSS-safe: escape first, then transform) --
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function inlineMd(s) {
+        var links = [];
+        // Pull [label](url) links out first so later passes can't re-match them
+        s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, function (m, label, url) {
+            var token = '%%QNLINK' + links.length + '%%';
+            links.push('<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + label + '</a>');
+            return token;
+        });
+        s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        s = s.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+        s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+        // Bare URLs (e.g. wa.me links) -> clickable
+        s = s.replace(/(^|\s)(https?:\/\/[^\s<]+)/g, function (m, pre, url) {
+            return pre + '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+        });
+        links.forEach(function (a, i) { s = s.split('%%QNLINK' + i + '%%').join(a); });
+        return s;
+    }
+
+    function renderMarkdown(text) {
+        var lines = String(text || '').split(/\r?\n/);
+        var html = '';
+        var list = null; // 'ul' | 'ol' | null
+        function closeList() {
+            if (list) { html += '</' + list + '>'; list = null; }
+        }
+        lines.forEach(function (raw) {
+            var line = escapeHtml(raw).trim();
+            if (!line) { closeList(); return; }
+            var h = /^(#{1,3})\s+(.+)$/.exec(line);
+            if (h) { closeList(); html += '<div class="qn-md-h">' + inlineMd(h[2]) + '</div>'; return; }
+            var ol = /^(\d+)[.)]\s+(.+)$/.exec(line);
+            if (ol) {
+                if (list !== 'ol') { closeList(); html += '<ol>'; list = 'ol'; }
+                html += '<li>' + inlineMd(ol[2]) + '</li>';
+                return;
+            }
+            var ul = /^[-*]\s+(.+)$/.exec(line);
+            if (ul) {
+                if (list !== 'ul') { closeList(); html += '<ul>'; list = 'ul'; }
+                html += '<li>' + inlineMd(ul[2]) + '</li>';
+                return;
+            }
+            closeList();
+            html += '<div>' + inlineMd(line) + '</div>';
+        });
+        closeList();
+        return html;
+    }
+
     function appendMsg(text, who) {
         var div = document.createElement('div');
         div.className = 'qn-msg ' + who;
-        div.textContent = text;
+        if (who === 'bot') {
+            div.innerHTML = renderMarkdown(text); // Cohere replies may contain markdown
+        } else {
+            div.textContent = text; // user input stays plain text
+        }
         messagesEl.appendChild(div);
         messagesEl.scrollTop = messagesEl.scrollHeight;
         return div;

@@ -30,9 +30,15 @@
     font-size: 26px;
     line-height: 1;
 }
+/* AI robot icon (Font Awesome 5 Pro solid — the family bundled with the site) */
+.qn-chat-launcher .qn-chat-launcher-icon::before {
+    content: "\f544";
+    font-family: "Font Awesome 5 Pro";
+    font-weight: 900;
+}
 .qn-chat-launcher[aria-expanded="true"] .qn-chat-launcher-icon::before {
     content: "\f00d"; /* × */
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Pro";
     font-weight: 900;
     font-size: 22px;
 }
@@ -180,6 +186,31 @@
     color: #1a1a1a;
     border: 1px solid #e2e6e2;
     border-bottom-right-radius: 4px;
+    white-space: normal; /* markdown renders as real HTML, not pre-wrapped text */
+}
+/* Markdown elements inside bot replies */
+.qn-msg.bot ol,
+.qn-msg.bot ul {
+    margin: 4px 0;
+    padding-inline-start: 22px;
+}
+.qn-msg.bot li {
+    margin-bottom: 2px;
+}
+.qn-msg.bot .qn-md-h {
+    margin: 4px 0 2px;
+    font-size: 15px;
+}
+.qn-msg.bot code {
+    background: #eef1ee;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 13px;
+}
+.qn-msg.bot a {
+    color: #0a7f11;
+    text-decoration: underline;
+    word-break: break-all;
 }
 .qn-msg.error {
     background: #fdecec;
