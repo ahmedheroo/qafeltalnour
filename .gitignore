@@ -21,3 +21,11 @@
 /tour-guide.html
 /tour-list.html
 /tour-sidebar.html
+
+# AI chatbot secrets — never commit the real API key
+api/config.php
+api/config.js
+
+# Local dev preview server artifacts
+dev-server.mjs
+dev-server.log
