@@ -150,6 +150,124 @@
         }
     }
 
+    // ---- Booking intent + inline booking form ----------------------------
+    var WA_NUMBER = '9660561126760';
+
+    function bookingIntent(text) {
+        text = String(text || '');
+        var book = /(حجز|احجز|أحجز|إحجز|الحجز|حجوزات)/;
+        var want = /(اريد|أريد|ابغى|أبغى|نبي|نريد|عايز)/;
+        var trip = /(رحل|باقة|باص|مقعد|عمرة|فندق|سكن|مجموعة|عائلة|جمعية|مدرسة|شركة)/;
+        return book.test(text) || (want.test(text) && trip.test(text));
+    }
+
+    function guessBookingType(text) {
+        text = String(text || '');
+        if (/(5\s*أيام|5\s*ايام|خمس أيام)/.test(text)) { return 'حجز رحلات 5 أيام'; }
+        if (/(3\s*أيام|3\s*ايام|ثلاث أيام)/.test(text)) { return 'حجز رحلات 3 أيام'; }
+        if (/vip/i.test(text)) { return 'باص VIP — مقعد'; }
+        return '';
+    }
+
+    function appendBookingForm(userMsg) {
+        // Only one open booking form at a time — replace a previous empty one.
+        var prev = messagesEl.querySelector('.qn-booking-msg:not(.qn-booking-done)');
+        if (prev) { prev.remove(); }
+
+        var wrap = document.createElement('div');
+        wrap.className = 'qn-msg bot qn-booking-msg';
+        wrap.innerHTML =
+            '<div class="qn-booking-title">🧾 نموذج الحجز السريع</div>' +
+            '<div class="qn-booking-sub">عبّئ البيانات وسنكمل الحجز معك على واتساب مباشرة</div>' +
+            '<form class="qn-booking-form" novalidate>' +
+            '  <label>الاسم الكامل *</label>' +
+            '  <input name="name" type="text" maxlength="60" autocomplete="name" placeholder="مثال: محمد أحمد" />' +
+            '  <label>رقم الجوال *</label>' +
+            '  <input name="phone" type="tel" maxlength="16" inputmode="tel" placeholder="05xxxxxxxx" />' +
+            '  <label>نوع الحجز *</label>' +
+            '  <select name="type">' +
+            '    <option value="">اختر نوع الحجز...</option>' +
+            '    <option>حجز رحلات 3 أيام</option>' +
+            '    <option>حجز رحلات 5 أيام</option>' +
+            '    <option>باص عادي — باص كامل</option>' +
+            '    <option>باص عادي — مقعد</option>' +
+            '    <option>باص VIP — باص كامل</option>' +
+            '    <option>باص VIP — مقعد</option>' +
+            '    <option>عرض جماعي (جمعية / مدرسة / شركة)</option>' +
+            '  </select>' +
+            '  <label>نوع الرحلة</label>' +
+            '  <select name="trip">' +
+            '    <option>ذهاب وعودة</option>' +
+            '    <option>ذهاب فقط</option>' +
+            '  </select>' +
+            '  <label>عدد الأشخاص</label>' +
+            '  <input name="count" type="number" min="1" max="60" value="1" />' +
+            '  <label>ملاحظات (اختياري)</label>' +
+            '  <input name="notes" type="text" maxlength="200" placeholder="مثال: التاريخ المفضل، فندق معين..." />' +
+            '  <button type="submit" class="qn-booking-send">إرسال الحجز عبر واتساب</button>' +
+            '  <div class="qn-booking-err" role="alert"></div>' +
+            '</form>';
+
+        // Pre-select the booking type if the user already mentioned one.
+        var prefill = guessBookingType(userMsg);
+        if (prefill) {
+            var sel = wrap.querySelector('select[name="type"]');
+            for (var i = 0; i < sel.options.length; i++) {
+                if (sel.options[i].text === prefill) { sel.selectedIndex = i; break; }
+            }
+        }
+
+        var formEl = wrap.querySelector('form');
+        formEl.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var el = formEl.elements;
+            var errEl = wrap.querySelector('.qn-booking-err');
+            errEl.textContent = '';
+
+            var name = el['name'].value.trim();
+            var phone = el['phone'].value.replace(/[\s\-()]/g, '');
+            var type = el['type'].value;
+            var trip = el['trip'].value;
+            var count = parseInt(el['count'].value, 10) || 0;
+            var notes = el['notes'].value.trim();
+
+            var problems = [];
+            if (name.length < 2) { problems.push('الاسم'); }
+            if (!/^\+?\d{9,15}$/.test(phone)) { problems.push('رقم الجوال (9-15 رقم)'); }
+            if (!type) { problems.push('نوع الحجز'); }
+            if (count < 1) { problems.push('عدد الأشخاص'); }
+            if (problems.length) {
+                errEl.textContent = 'يرجى تعبئة: ' + problems.join('، ');
+                return;
+            }
+
+            var msg =
+                'السلام عليكم، أود حجز رحلة عمرة مع قافلة النور 🌙\n' +
+                '—————————————\n' +
+                '👤 الاسم: ' + name + '\n' +
+                '📱 الجوال: ' + phone + '\n' +
+                '🧾 نوع الحجز: ' + type + '\n' +
+                '🚌 نوع الرحلة: ' + trip + '\n' +
+                '👥 عدد الأشخاص: ' + count + '\n' +
+                (notes ? '📝 ملاحظات: ' + notes + '\n' : '') +
+                '—————————————\n' +
+                '(أُرسلت من نموذج المساعد الذكي في الموقع)';
+            var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+
+            window.open(url, '_blank', 'noopener');
+
+            wrap.classList.add('qn-booking-done');
+            formEl.innerHTML =
+                '<div class="qn-booking-success">✅ تم تجهيز رسالة الحجز! أكمل الإرسال في واتساب وسيرد عليك فريقنا بإذن الله.</div>' +
+                '<a class="qn-booking-again" href="' + url + '" target="_blank" rel="noopener noreferrer">لم تُفتح واتساب؟ اضغط هنا لإرسال الحجز</a>';
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        });
+
+        messagesEl.appendChild(wrap);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return wrap;
+    }
+
     function showWelcome() {
         appendMsg(
             'أهلاً وسهلاً بك في قافلة النور 🌙\nأنا مساعدك الذكي، اسألني عن رحلات العمرة، الباصات، الفنادق، الباقات، أو أوقات العمل — وأجيبك فوراً!',
@@ -194,15 +312,25 @@
         send
             .then(function (data) {
                 if (data && data.reply) {
-                    appendMsg(data.reply, 'bot');
-                    history.push({ role: 'assistant', content: data.reply });
-                    if (history.length > 20) { history = history.slice(-20); }
+                    var reply = String(data.reply);
+                    var llmForm = reply.indexOf('[[BOOKING_FORM]]') !== -1;
+                    reply = reply.split('[[BOOKING_FORM]]').join('').trim();
+                    if (reply) {
+                        appendMsg(reply, 'bot');
+                        history.push({ role: 'assistant', content: reply });
+                        if (history.length > 20) { history = history.slice(-20); }
+                    }
+                    if (llmForm || bookingIntent(msg)) {
+                        appendBookingForm(msg);
+                    }
                 } else {
                     appendMsg('حدث خطأ غير متوقع. جرّب مرة أخرى أو تواصل معنا على واتساب: 0561126760', 'error');
+                    if (bookingIntent(msg)) { appendBookingForm(msg); }
                 }
             })
             .catch(function () {
                 appendMsg('تعذر الاتصال. تحقق من اتصالك بالإنترنت أو تواصل معنا مباشرة على واتساب: 0561126760', 'error');
+                if (bookingIntent(msg)) { appendBookingForm(msg); }
             })
             .then(function () {
                 setPending(false);

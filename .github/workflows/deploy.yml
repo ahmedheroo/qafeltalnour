@@ -17,31 +17,35 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # "environment: github-pages" makes the job use the github-pages
-    # environment's secrets. You can create the secret either:
-    #   a) Settings → Environments → github-pages → Add environment secret → COHERE_API_KEY, or
-    #   b) Settings → Secrets and variables → Actions → Repository secret → COHERE_API_KEY
+    # "environment: github-pages" also exposes environment secrets from the
+    # github-pages environment. The secret can be created either:
+    #   a) Settings → Secrets and variables → Actions → Repository secret → COHERE_API_KEY, or
+    #   b) Settings → Environments → github-pages → Add environment secret → COHERE_API_KEY
     environment: github-pages
     steps:
       - uses: actions/checkout@v4
+
+      # Ensures Pages uses the "GitHub Actions" build type (instead of the
+      # legacy branch deploy) so the deploy-pages step below is allowed.
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Generate api/config.js from COHERE_API_KEY secret
         env:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
         run: |
+          # Trim stray whitespace/newlines that often sneak into pasted secrets.
+          KEY="$(printf '%s' "$COHERE_API_KEY" | tr -d ' \t\r\n')"
           mkdir -p api
-          if [ -z "$COHERE_API_KEY" ]; then
-            echo "COHERE_API_KEY secret is not set — deploying in demo mode (no live Cohere answers)."
-            cat > api/config.js <<'EOF'
-window.QN_CHAT_CONFIG = { cohereApiKey: '' };
-EOF
+          if [ -z "$KEY" ]; then
+            echo "::warning::COHERE_API_KEY secret is not set — deploying in demo mode (no live Cohere answers)."
+            printf 'window.QN_CHAT_CONFIG = { cohereApiKey: "" };\n' > api/config.js
           else
-            echo "Generating api/config.js with the COHERE_API_KEY secret."
-            {
-              echo 'window.QN_CHAT_CONFIG = {'
-              printf '    cohereApiKey: %s\n' "$(printf '%s' "$COHERE_API_KEY" | jq -Rs .)"
-              echo '};'
-            } > api/config.js
+            echo "Generating api/config.js (key detected: ${#KEY} chars)."
+            printf 'window.QN_CHAT_CONFIG = {\n    cohereApiKey: %s\n};\n' \
+              "$(printf '%s' "$KEY" | jq -Rs .)" > api/config.js
           fi
 
       - name: Upload Pages artifact
